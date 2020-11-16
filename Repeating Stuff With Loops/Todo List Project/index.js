@@ -26,9 +26,15 @@ while(!quit) {
         }
     } else if(action === "delete") {
         // Recibe el índice a borrar y lo guarda.
-        let index = prompt("Enter index of todo to delete");
-        // Lo saca de la lista.
-        todos.splice(index, 1);
+        let index = parseInt(prompt("Enter index of todo to delete"));
+        // Si es un número...
+        if(!Number.isNaN(index)) {
+            // Lo saca de la lista.
+            let deleted = todos.splice(index, 1);
+            console.log(`You've deleted ${deleted}`);
+        } else {
+            console.log("Invalid index");
+        }
     } else if (action === "quit") {
         quit = true;
         console.log("OK, YOU QUIT THE APP");
