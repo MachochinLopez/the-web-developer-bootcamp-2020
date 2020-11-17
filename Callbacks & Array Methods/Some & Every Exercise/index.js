@@ -1,0 +1,1 @@
+const allEvens = arr => arr.every(el => el % 2 === 0);
