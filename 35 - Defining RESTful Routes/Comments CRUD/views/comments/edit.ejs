@@ -1,0 +1,16 @@
+<%- include('../partials/header') %>
+
+    <h1>Make a new comment</h1>
+    <form action="/comments/<%= comment.id %>?_method=PATCH" method="POST">
+        <section>
+            <label for="username">Username: </label><%= comment.username %>
+        </section>
+        <section>
+            <label for="comment">Comment Text</label>
+            <br>
+            <textarea name="comment" id="comment" cols="30" rows="5"><%= comment.comment %> </textarea>
+        </section>
+        <button>Submit</button>
+    </form>
+
+<%- include('../partials/footer') %> 
