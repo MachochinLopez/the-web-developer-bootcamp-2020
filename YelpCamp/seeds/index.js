@@ -30,6 +30,7 @@ const seedDb = async () => {
         const price = Math.floor(Math.random() * 20) + 10;
         // Crea un nuevo Campground.
         const camp = new Campground({
+            author: '5fca92629bbc552874773619',
             title: `${sample(descriptors)} ${sample(places)}`,
             image: 'https://source.unsplash.com/collection/483251',
             price: price,
