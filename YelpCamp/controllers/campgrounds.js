@@ -1,6 +1,10 @@
+const { cloudinary } = require('../cloudinary');
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const mapboxToken = process.env.MAPBOX_TOKEN;
+const geocoder = mbxGeocoding({ accessToken: mapboxToken });
+
 // MODELOS
 const Campground = require('../models/campground');
-const { cloudinary } = require('../cloudinary');
 
 /**
  * Carga la vista del índice, donde lista todos los campamentos.
@@ -49,6 +53,15 @@ module.exports.store = async (req, res, next) => {
         url: file.path,
         filename: file.filename
     }));
+
+    // Consulta la locación dada en el formulario.
+    const geoData = await geocoder.forwardGeocode({
+        query: req.body.campground.location,
+        limit: 1
+    }).send();
+    // Guarda las coordenadas.
+    campground.geometry = geoData.body.features[0].geometry;
+    
     // Guarda el campground recién creado.
     await campground.save();
     
