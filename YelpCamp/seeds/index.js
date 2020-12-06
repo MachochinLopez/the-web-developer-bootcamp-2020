@@ -24,7 +24,7 @@ const seedDb = async () => {
     // Vacía la tabla.
     await Campground.deleteMany({});
     
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 300; i++) {
         // Toma una ciudad al azar.
         const random1000 = Math.floor(Math.random() * 1000);
         const price = Math.floor(Math.random() * 20) + 10;
@@ -33,7 +33,10 @@ const seedDb = async () => {
             author: '5fca92629bbc552874773619',
             geometry: {
                 type : "Point",
-                coordinates: [ -113.1331, 47.0202 ]
+                coordinates: [
+                    cities[random1000].longitude,
+                    cities[random1000].latitude,
+                ]
             },
             title: `${sample(descriptors)} ${sample(places)}`,
             price,

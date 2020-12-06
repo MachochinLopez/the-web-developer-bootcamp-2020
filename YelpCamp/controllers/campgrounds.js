@@ -142,6 +142,14 @@ module.exports.update = async (req, res) => {
         filename: file.filename
     }));
     campground.images.push(...images);
+    // Consulta la locación dada en el formulario.
+    const geoData = await geocoder.forwardGeocode({
+        query: req.body.campground.location,
+        limit: 1
+    }).send();
+    // Guarda las coordenadas.
+    campground.geometry = geoData.body.features[0].geometry;
+    
     await campground.save();
     // Si hay imágenes que borrar...
     if (req.body.deletedImages) {
