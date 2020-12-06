@@ -32,8 +32,33 @@ const seedDb = async () => {
         const camp = new Campground({
             author: '5fca92629bbc552874773619',
             title: `${sample(descriptors)} ${sample(places)}`,
-            image: 'https://source.unsplash.com/collection/483251',
-            price: price,
+            price,
+            images: [
+                {
+                    url: 'https://res.cloudinary.com/dshys24wz/image/upload/v1607207012/YelpCamp/20190423_154916_muml3d.jpg',
+                    filename: '20190423_154916_muml3d'
+                },
+                {
+                    url: 'https://res.cloudinary.com/dshys24wz/image/upload/v1607207010/YelpCamp/20190429_131855_wdqda5.jpg',
+                    filename: 'YelpCamp/20190429_131855_wdqda5'
+                },
+                {
+                    url: 'https://res.cloudinary.com/dshys24wz/image/upload/v1607207006/YelpCamp/20191111_185906_ghgb50.jpg',
+                    filename: 'YelpCamp/20191111_185906_ghgb50'
+                },
+                {
+                    url: 'https://res.cloudinary.com/dshys24wz/image/upload/v1607207006/YelpCamp/20191212_183146_fycpqc.jpg',
+                    filename: 'YelpCamp/20191212_183146_fycpqc'
+                },
+                {
+                    url: 'https://res.cloudinary.com/dshys24wz/image/upload/v1607207006/YelpCamp/20190423_112219_forhix.jpg',
+                    filename: 'YelpCamp/20190423_112219_forhix'
+                },
+                {
+                    url: 'https://res.cloudinary.com/dshys24wz/image/upload/v1607207004/YelpCamp/Screenshot_2017-08-06-00-25-26_d97bqw.png',
+                    filename: 'YelpCamp/Screenshot_2017-08-06-00-25-26_d97bqw'
+                },
+            ],
             description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eaque officia tenetur nulla molestiae accusantium quam suscipit ipsa eligendi aliquam delectus ducimus, reiciendis debitis recusandae iste aut odit dignissimos! Totam, quod?',
             location: `${cities[random1000].city}, ${cities[random1000].state}`
         });

@@ -1,5 +1,6 @@
 // MODELOS
 const Campground = require('../models/campground');
+const { cloudinary } = require('../cloudinary');
 
 /**
  * Carga la vista del índice, donde lista todos los campamentos.
@@ -43,6 +44,11 @@ module.exports.store = async (req, res, next) => {
     const campground = new Campground(req.body.campground);
     // Le agrega el autor del campground.
     campground.author = req.user._id;
+    // Le agrega las imágenes que se hayan subido.
+    campground.images = req.files.map(file => ({
+        url: file.path,
+        filename: file.filename
+    }));
     // Guarda el campground recién creado.
     await campground.save();
     
@@ -117,6 +123,22 @@ module.exports.update = async (req, res) => {
     const { id } = req.params;
     // Busca y actualiza el campground con los datos enviados en el formulario.
     const campground = await Campground.findByIdAndUpdate(id, { ...req.body.campground });
+    // Le agrega las imágenes que se hayan subido.
+    const images = req.files.map(file => ({
+        url: file.path,
+        filename: file.filename
+    }));
+    campground.images.push(...images);
+    await campground.save();
+    // Si hay imágenes que borrar...
+    if (req.body.deletedImages) {
+        // Por cada imagen que haya que eliminar...
+        for (const filename of req.body.deletedImages) {
+            await cloudinary.uploader.destroy(filename);
+        }
+        // Saca del arreglo las imágenes cuyo filename coincida con el arreglo mandado en el form.
+        await campground.updateOne({ $pull: { images: { filename: { $in: req.body.deletedImages}}}});
+    }
     req.flash('success', 'Successfully updated campground!');
 
     return res.redirect(`/campgrounds/${campground._id}`);
